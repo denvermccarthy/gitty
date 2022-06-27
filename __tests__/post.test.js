@@ -23,7 +23,7 @@ describe('posts routes', () => {
     expect(res.status).toEqual(200);
 
     expect(res.body.title).toEqual('testing');
-    expect(res.body.title).toEqual('Testing out post');
+    expect(res.body.description).toEqual('Testing out post');
   });
 
   afterAll(() => {
