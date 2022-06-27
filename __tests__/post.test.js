@@ -3,7 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 
-describe('backend-express-template routes', () => {
+describe('posts routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
@@ -11,6 +11,10 @@ describe('backend-express-template routes', () => {
     const res = await request(app).get('/api/v1/posts');
 
     expect(res.status).toEqual(200);
+    const post = res.body.find((p) => p.id === 1);
+
+    expect(post.title).toEqual('Breaking News');
+    expect(post.description).toEqual('bad news');
   });
 
   afterAll(() => {
