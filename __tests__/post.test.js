@@ -15,6 +15,16 @@ describe('posts routes', () => {
 
     expect(post.description).toEqual('bad news');
   });
+  test('authenticated users should be able to post ot /posts', async () => {
+    const res = await request(app)
+      .post('/api/v1/posts')
+      .send({ title: 'testing', description: 'Testing out post' });
+
+    expect(res.status).toEqual(200);
+
+    expect(res.body.title).toEqual('testing');
+    expect(res.body.title).toEqual('Testing out post');
+  });
 
   afterAll(() => {
     pool.end();
