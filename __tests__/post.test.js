@@ -2,6 +2,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
+jest.mock('../lib/services/github');
 
 describe('posts routes', () => {
   beforeEach(() => {
@@ -15,8 +16,12 @@ describe('posts routes', () => {
 
     expect(post.description).toEqual('bad news');
   });
-  test('authenticated users should be able to post ot /posts', async () => {
-    const res = await request(app)
+  test('authenticated users should be able to post to /posts', async () => {
+    const agent = await request.agent(app);
+
+    await agent.get('/api/v1/github/callback?code=900').redirects(1);
+
+    const res = await agent
       .post('/api/v1/posts')
       .send({ title: 'testing', description: 'Testing out post' });
 
@@ -25,7 +30,6 @@ describe('posts routes', () => {
     expect(res.body.title).toEqual('testing');
     expect(res.body.description).toEqual('Testing out post');
   });
-
   afterAll(() => {
     pool.end();
   });
