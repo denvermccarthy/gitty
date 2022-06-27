@@ -8,3 +8,13 @@ CREATE TABLE github_users (
     email VARCHAR,
     avatar VARCHAR
 );
+
+DROP TABLE IF EXISTS posts;
+
+CREATE TABLE posts (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    title VARCHAR NOT NULL,
+    description VARCHAR
+);
+
+INSERT INTO posts (title, description) VALUES ('Breaking News', 'bad news');

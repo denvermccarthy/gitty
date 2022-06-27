@@ -11,9 +11,8 @@ describe('posts routes', () => {
     const res = await request(app).get('/api/v1/posts');
 
     expect(res.status).toEqual(200);
-    const post = res.body.find((p) => p.id === 1);
+    const post = res.body.find((p) => p.title === 'Breaking News');
 
-    expect(post.title).toEqual('Breaking News');
     expect(post.description).toEqual('bad news');
   });
 
