@@ -30,6 +30,16 @@ describe('backend-express-template routes', () => {
       exp: expect.any(Number),
     });
   });
+
+  test('logout route should successfully log a user out', async () => {
+    const signIn = await request
+      .agent(app)
+      .get('/api/v1/github/callback?code=900')
+      .redirects(1);
+
+    const signOut = await request.agent(app).post('/api/v1/github/logout');
+    expect(signOut.body).toEqual('Successfully signed out');
+  });
   afterAll(() => {
     pool.end();
   });
